@@ -22,28 +22,19 @@ app.get('/moneys/:id', async (req, res) => {
   }
 });
 
+// POST: Создать монету
 app.post('/moneys', async (req, res) => {
-
   try {
-
-    const { name, email } = req.body;
-
-    const money = new Money({ name, email });
-
+    const { name } = req.body;
+    const money = new Money({ name });
     await money.save();
-
     res.status(201).json(money);
-
   } catch (err) {
-
     res.status(500).send(err.message);
-
   }
-
 });
  
- 
-// PUT: Обновить имя пользователя
+// PUT: Обновить имя монеты
 app.put('/money/:id', async (req, res) => {
   try {
     const { name } = req.body;
