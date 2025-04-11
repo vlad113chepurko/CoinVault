@@ -22,6 +22,16 @@ app.get('/moneys/:id', async (req, res) => {
   }
 });
 
+app.get('/moneys/', async (req, res) => {
+  try {
+    const money = await Money.find();
+    if (!money) return res.status(404).send('Money not found');
+    res.json(money);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 // POST: Создать монету
 app.post('/moneys', async (req, res) => {
   try {
@@ -38,7 +48,7 @@ app.post('/moneys', async (req, res) => {
 app.put('/money/:id', async (req, res) => {
   try {
     const { name } = req.body;
-    const money = await Moneys.findByIdAndUpdate(
+    const money = await Money.findByIdAndUpdate(
       req.params.id,
       { name },
       { new: true }
