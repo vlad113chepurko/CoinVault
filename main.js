@@ -59,6 +59,21 @@ app.put('/money/:id', async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
+app.delete('/money/:id', async(req,res) => {
+  try {
+    const { name } = req.body;
+    const money = await Money.findByIdAndDelete(
+    req.params.id,
+    { name },
+    { deleted: true }
+  );
+  if (!money) return res.status(404).send('Money not found');
+  res.json(money);
+  } catch (err) {
+    res.status(500).send(err.message)
+  }
+})
  
 const PORT = 3000;
 app.listen(PORT, () => {
